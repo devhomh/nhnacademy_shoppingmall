@@ -86,7 +86,7 @@ class ControllerFactoryTest {
     }
 
     @ParameterizedTest(name = "method:{0}, path:{1}")
-    @MethodSource("parmasForGetKey")
+    @MethodSource("paramsForGetKey")
     @DisplayName("getKey")
     void getKey(String paramMethod, String paramPath) throws Exception {
 
@@ -98,7 +98,7 @@ class ControllerFactoryTest {
 
 
     @ParameterizedTest(name = "key={0}-{1}")
-    @MethodSource("parmasForGetKey")
+    @MethodSource("paramsForGetKey")
     @DisplayName("getBean")
     void getBean(String paramMethod, String paramPath) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = ControllerFactory.class.getDeclaredMethod("getBean", String.class );
@@ -107,7 +107,7 @@ class ControllerFactoryTest {
         Assertions.assertNotNull(controller);
     }
 
-    private static Stream<Arguments> parmasForGetKey(){
+    private static Stream<Arguments> paramsForGetKey(){
         return Stream.of(
                 Arguments.of("GET", "/index.do"),
                 Arguments.of("GET", "/login.do"),

@@ -1,5 +1,6 @@
 package com.nhnacademy.shoppingmall.common.filter;
 
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.*;
@@ -11,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-
+@WebFilter("/")
 public class WelcomePageFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         //todo#9 /요청이 오면 welcome page인 index.do redirect 합니다.
-
+        res.sendRedirect("/index.do");
+        chain.doFilter(req, res);
     }
 }

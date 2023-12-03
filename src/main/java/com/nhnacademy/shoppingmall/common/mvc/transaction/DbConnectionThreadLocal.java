@@ -57,4 +57,6 @@ public class DbConnectionThreadLocal {
             log.error(e.getMessage());
         }
     }
+
+    private DbConnectionThreadLocal(){}
 }

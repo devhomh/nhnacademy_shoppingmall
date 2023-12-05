@@ -1,3 +1,4 @@
+<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -35,8 +36,21 @@
                     </form>
 
                     <div class="text-end">
+                        <%
+                            HttpSession session = request.getSession();
+                            boolean login = Objects.nonNull(session.getAttribute("loginID"));
+                            if(login){
+                        %>
+                        <form method="post" action="/logout.do">
+                            <button class="btn btn-outline-light me-2">로그아웃</button>
+                        </form>
+                        <% } else { %>
                         <a class="btn btn-outline-light me-2" href="/login.do" >로그인</a>
                         <a class="btn btn-warning" href="signup.do" >회원가입</a>
+                        <%
+                        }
+                        %>
+
                     </div>
                 </div>
             </div>

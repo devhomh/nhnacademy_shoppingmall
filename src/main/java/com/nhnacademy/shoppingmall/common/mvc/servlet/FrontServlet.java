@@ -5,6 +5,7 @@ import com.nhnacademy.shoppingmall.common.mvc.view.ViewResolver;
 import com.nhnacademy.shoppingmall.common.mvc.controller.BaseController;
 import com.nhnacademy.shoppingmall.common.mvc.controller.ControllerFactory;
 
+import java.sql.Connection;
 import lombok.extern.slf4j.Slf4j;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

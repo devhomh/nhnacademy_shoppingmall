@@ -2,10 +2,10 @@ package com.nhnacademy.shoppingmall.controller.auth;
 
 import com.nhnacademy.shoppingmall.common.mvc.annotation.RequestMapping;
 import com.nhnacademy.shoppingmall.common.mvc.controller.BaseController;
-import com.nhnacademy.shoppingmall.user.domain.User;
-import com.nhnacademy.shoppingmall.user.repository.impl.UserRepositoryImpl;
-import com.nhnacademy.shoppingmall.user.service.UserService;
-import com.nhnacademy.shoppingmall.user.service.impl.UserServiceImpl;
+import com.nhnacademy.shoppingmall.data.domain.User;
+import com.nhnacademy.shoppingmall.data.repository.impl.UserRepositoryImpl;
+import com.nhnacademy.shoppingmall.data.service.interfaces.UserService;
+import com.nhnacademy.shoppingmall.data.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +29,6 @@ public class LoginPostController implements BaseController {
         session.setAttribute("loginID", loginUser.getUserId());
         session.setMaxInactiveInterval(3600);
 
-        return "shop/main/index";
+        return loginUser.getUserAuth() == User.Auth.ROLE_ADMIN ? "shop/admin/index" : "shop/main/index";
     }
 }

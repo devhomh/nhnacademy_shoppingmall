@@ -3,7 +3,6 @@ package com.nhnacademy.shoppingmall.controller.auth;
 import com.nhnacademy.shoppingmall.common.mvc.annotation.RequestMapping;
 import com.nhnacademy.shoppingmall.common.mvc.controller.BaseController;
 
-import com.nhnacademy.shoppingmall.user.domain.User;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,9 +15,7 @@ public class LoginController implements BaseController {
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         //todo#13-1 session이 존재하고 로그인이 되어 있다면 redirect:/index.do 반환 합니다.
         HttpSession session = req.getSession(false);
-        String loginID = (String) session.getAttribute("loginID");
-        boolean login = Objects.nonNull(loginID);
-
+        boolean login = Objects.nonNull(session) && Objects.nonNull(session.getAttribute("loginID"));
         return login ? "redirect:/index.do" : "shop/login/login_form";
     }
 }

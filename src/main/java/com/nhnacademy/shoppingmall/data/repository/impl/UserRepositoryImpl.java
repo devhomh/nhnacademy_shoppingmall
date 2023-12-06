@@ -1,9 +1,10 @@
-package com.nhnacademy.shoppingmall.user.repository.impl;
+package com.nhnacademy.shoppingmall.data.repository.impl;
 
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
-import com.nhnacademy.shoppingmall.user.domain.User;
-import com.nhnacademy.shoppingmall.user.repository.UserRepository;
-import java.util.NoSuchElementException;
+import com.nhnacademy.shoppingmall.data.domain.User;
+import com.nhnacademy.shoppingmall.data.exception.UserAlreadyExistsException;
+import com.nhnacademy.shoppingmall.data.exception.UserNotFoundException;
+import com.nhnacademy.shoppingmall.data.repository.interfaces.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
@@ -29,7 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
             psmt.setString(1,userId);
             psmt.setString(2,userPassword);
             try (ResultSet rs = psmt.executeQuery()) {
-                if(rs.next() && userId.equals( rs.getString("UserID")) && userPassword.equals(rs.getString("UserPassWord"))){
+                if(rs.next()){
                     User user = new User(
                             rs.getString("UserID"),
                             rs.getString("UserName"),
@@ -62,7 +63,7 @@ public class UserRepositoryImpl implements UserRepository {
         try(PreparedStatement psmt = connection.prepareStatement(sql)) {
             psmt.setString(1, userId);
             try (ResultSet rs = psmt.executeQuery()){
-                if(rs.next() && userId.equals( rs.getString("UserID"))){
+                if(rs.next()){
                     User user = new User(
                             rs.getString("UserID"),
                             rs.getString("UserName"),
@@ -117,13 +118,10 @@ public class UserRepositoryImpl implements UserRepository {
 
         try(PreparedStatement psmt = connection.prepareStatement(sql)) {
             psmt.setString(1, userId);
-            if(findById(userId).isPresent()){
-                return psmt.executeUpdate();
-            }
+            return psmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        throw new NoSuchElementException("삭제할 ID가 없습니다.");
     }
 
     @Override
@@ -132,24 +130,20 @@ public class UserRepositoryImpl implements UserRepository {
             throw new NullPointerException("user 값이 null 입니다.");
         }
         //todo#3-5 회원수정, executeUpdate()을 반환합니다.
-        if(findById(user.getUserId()).isEmpty()){
-            throw new NoSuchElementException("수정할 ID가 없습니다.");
-        } else{
-            Connection connection = DbConnectionThreadLocal.getConnection();
-            String sql = "UPDATE Users SET UserName = ?, UserPassWord = ?, UserBirth = ?, UserAuth = ?, UserPoint = ?, CreatedAt = ?, LatestLoginAt = ? WHERE UserID = ?";
-            try (PreparedStatement psmt = connection.prepareStatement(sql)) {
-                psmt.setString(1, user.getUserName());
-                psmt.setString(2, user.getUserPassword());
-                psmt.setString(3, user.getUserBirth());
-                psmt.setString(4, String.valueOf(user.getUserAuth()));
-                psmt.setInt(5, user.getUserPoint());
-                psmt.setTimestamp(6, Timestamp.valueOf(user.getCreatedAt()));
-                psmt.setTimestamp(7, Objects.nonNull(user.getLatestLoginAt()) ? Timestamp.valueOf(user.getLatestLoginAt()) : null);
-                psmt.setString(8, user.getUserId());
-                return psmt.executeUpdate();
-            } catch(SQLException e){
-                throw new RuntimeException(e);
-            }
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        String sql = "UPDATE Users SET UserName = ?, UserPassWord = ?, UserBirth = ?, UserAuth = ?, UserPoint = ?, CreatedAt = ?, LatestLoginAt = ? WHERE UserID = ?";
+        try (PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setString(1, user.getUserName());
+            psmt.setString(2, user.getUserPassword());
+            psmt.setString(3, user.getUserBirth());
+            psmt.setString(4, String.valueOf(user.getUserAuth()));
+            psmt.setInt(5, user.getUserPoint());
+            psmt.setTimestamp(6, Timestamp.valueOf(user.getCreatedAt()));
+            psmt.setTimestamp(7, Objects.nonNull(user.getLatestLoginAt()) ? Timestamp.valueOf(user.getLatestLoginAt()) : null);
+            psmt.setString(8, user.getUserId());
+            return psmt.executeUpdate();
+        } catch(SQLException e){
+            throw new RuntimeException(e);
         }
     }
 
@@ -159,18 +153,14 @@ public class UserRepositoryImpl implements UserRepository {
             throw new NullPointerException("입력한 값이 없습니다. 다시 한번 확인하세요");
         }
         //todo#3-6, 마지막 로그인 시간 업데이트, executeUpdate()을 반환합니다.
-        if(findById(userId).isEmpty()){
-            throw new NoSuchElementException("수정할 ID가 없습니다.");
-        } else{
-            Connection connection = DbConnectionThreadLocal.getConnection();
-            String sql = "UPDATE Users SET LatestLoginAt = ? WHERE UserID = ?";
-            try (PreparedStatement psmt = connection.prepareStatement(sql)) {
-                psmt.setTimestamp(1, Timestamp.valueOf(latestLoginAt));
-                psmt.setString(2, userId);
-                return psmt.executeUpdate();
-            } catch(SQLException e){
-                throw new RuntimeException(e);
-            }
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        String sql = "UPDATE Users SET LatestLoginAt = ? WHERE UserID = ?";
+        try (PreparedStatement psmt = connection.prepareStatement(sql)) {
+            psmt.setTimestamp(1, Timestamp.valueOf(latestLoginAt));
+            psmt.setString(2, userId);
+            return psmt.executeUpdate();
+        } catch(SQLException e){
+            throw new RuntimeException(e);
         }
     }
 

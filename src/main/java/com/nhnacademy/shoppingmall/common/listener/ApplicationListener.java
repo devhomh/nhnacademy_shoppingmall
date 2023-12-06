@@ -1,11 +1,11 @@
 package com.nhnacademy.shoppingmall.common.listener;
 
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
-import com.nhnacademy.shoppingmall.user.domain.User;
-import com.nhnacademy.shoppingmall.user.exception.UserAlreadyExistsException;
-import com.nhnacademy.shoppingmall.user.repository.impl.UserRepositoryImpl;
-import com.nhnacademy.shoppingmall.user.service.UserService;
-import com.nhnacademy.shoppingmall.user.service.impl.UserServiceImpl;
+import com.nhnacademy.shoppingmall.data.domain.User;
+import com.nhnacademy.shoppingmall.data.exception.UserAlreadyExistsException;
+import com.nhnacademy.shoppingmall.data.repository.impl.UserRepositoryImpl;
+import com.nhnacademy.shoppingmall.data.service.interfaces.UserService;
+import com.nhnacademy.shoppingmall.data.service.impl.UserServiceImpl;
 import java.time.LocalDateTime;
 import javax.servlet.annotation.WebListener;
 import lombok.extern.slf4j.Slf4j;

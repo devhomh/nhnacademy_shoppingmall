@@ -4,7 +4,7 @@
 
 [source,java]
 ----
-include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/user/repository/UserRepository.java[]
+include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/data/repository/interfaces/UserRepository.java[]
 ----
 
 == UserRepositoryImpl
@@ -14,7 +14,7 @@ include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/user/repositor
 
 [source,java]
 ----
-include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/user/repository/impl/UserRepositoryImpl.java[]
+include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/data/repository/impl/UserRepositoryImpl.java[]
 ----
 
 == Test Code

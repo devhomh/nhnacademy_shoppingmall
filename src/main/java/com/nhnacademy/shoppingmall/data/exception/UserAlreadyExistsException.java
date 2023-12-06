@@ -1,4 +1,4 @@
-package com.nhnacademy.shoppingmall.user.exception;
+package com.nhnacademy.shoppingmall.data.exception;
 
 public class UserAlreadyExistsException extends RuntimeException {
     public UserAlreadyExistsException(String userId){

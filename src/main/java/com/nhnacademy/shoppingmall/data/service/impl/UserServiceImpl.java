@@ -1,13 +1,16 @@
-package com.nhnacademy.shoppingmall.user.service.impl;
+package com.nhnacademy.shoppingmall.data.service.impl;
 
-import com.nhnacademy.shoppingmall.user.exception.UserAlreadyExistsException;
-import com.nhnacademy.shoppingmall.user.exception.UserNotFoundException;
-import com.nhnacademy.shoppingmall.user.service.UserService;
-import com.nhnacademy.shoppingmall.user.domain.User;
-import com.nhnacademy.shoppingmall.user.repository.UserRepository;
+import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
+import com.nhnacademy.shoppingmall.data.exception.UserAlreadyExistsException;
+import com.nhnacademy.shoppingmall.data.exception.UserNotFoundException;
+import com.nhnacademy.shoppingmall.data.service.interfaces.UserService;
+import com.nhnacademy.shoppingmall.data.domain.User;
+import com.nhnacademy.shoppingmall.data.repository.interfaces.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
@@ -18,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUser(String userId){
         if(userId == null){
-            throw new NullPointerException("Parameter value is null");
+            throw new NullPointerException("ID 값이 없습니다.");
         }
         //todo#4-1 회원조회
         return userRepository.findById(userId).orElse(null);
@@ -28,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         //todo#4-2 회원등록
         if(user == null){
-            throw new NullPointerException("Parameter value is null");
+            throw new DomainNullPointerException(user);
         }
         if(userRepository.countByUserId(user.getUserId()) == 1) {
             throw new UserAlreadyExistsException(user.getUserId());
@@ -41,7 +44,7 @@ public class UserServiceImpl implements UserService {
     public void updateUser(User user) {
         //todo#4-3 회원수정
         if(user == null){
-            throw new NullPointerException("Parameter value is null");
+            throw new DomainNullPointerException(user);
         }
         if(userRepository.countByUserId(user.getUserId()) == 0){
             throw new UserNotFoundException(user.getUserId());
@@ -54,7 +57,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String userId) {
         //todo#4-4 회원삭제
         if(userId == null){
-            throw new NullPointerException("Parameter value is null");
+            throw new NullPointerException("ID 값이 없습니다.");
         }
         if(userRepository.countByUserId(userId) == 0){
             throw new UserNotFoundException(userId);
@@ -66,7 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User doLogin(String userId, String userPassword) {
         if(userId == null || userPassword == null){
-            throw new NullPointerException("Parameter value is null");
+            throw new NullPointerException("ID 값이 없습니다.");
         }
         //todo#4-5 로그인 구현, userId, userPassword로 일치하는 회원 조회
         Optional<User> optionalUser = userRepository.findByUserIdAndUserPassword(userId, userPassword);

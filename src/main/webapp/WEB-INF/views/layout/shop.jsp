@@ -44,7 +44,7 @@
                             </c:when>
                             <c:otherwise>
                                 <a class="btn btn-outline-light me-2" href="/login.do" >로그인</a>
-                                <a class="btn btn-warning" href="signup.do" >회원가입</a>
+                                <a class="btn btn-warning" href="/signup.do" >회원가입</a>
                             </c:otherwise>
                         </c:choose>
                     </div>

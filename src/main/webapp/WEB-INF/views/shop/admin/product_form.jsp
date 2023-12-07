@@ -56,7 +56,7 @@
         <label for="product_comment">상품 설명</label>
       </div>
 
-      <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">추가</button>
+      <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">${empty product ? "추가" : "변경"}</button>
 
       <p class="mt-5 mb-3 text-muted">© 2022-2024</p>
 

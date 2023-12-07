@@ -28,11 +28,21 @@
                         <div class="btn-group">
                             <button type="button" class="btn btn-sm btn-outline-secondary" onclick=location.href="${view_link}">View</button>
                         </div>
-                        <small>남은 수량 : ${product.quantity}</small>
-                        <small class="text-muted">${product.unitCost}</small>
+                        <small class="text-bold">₩${product.unitCost}</small>
+                        <small class="text-muted">남은 수량 : ${product.quantity}</small>
                     </div>
                 </div>
             </div>
         </div>
     </c:forEach>
 </div>
+
+<span style="margin-top: 50px; height: 100%; display:flex; align-items: center; justify-content: center">
+    <c:forEach begin="1" end="${totalPage}" var="pageNumber">
+        <c:url var="pageURL" value="/index.do">
+            <c:param name="page" value="${pageNumber}" />
+        </c:url>
+        <a href="${pageURL}" style="margin-right: 5px">${pageNumber}</a>
+    </c:forEach>
+</span>
+

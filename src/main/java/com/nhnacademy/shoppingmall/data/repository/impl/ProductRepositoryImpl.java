@@ -85,16 +85,16 @@ public class ProductRepositoryImpl implements ProductRepository {
             throw new DomainNullPointerException(product);
         }
         Connection connection = DbConnectionThreadLocal.getConnection();
-        String sql = "UPDATE Products SET ProductID = ?, CategoryID = ?, ModelNumber = ?, ModelName = ?, Quantity = ?, ProductImage = ?, UnitCost = ?, Descriptioin = ?";
+        String sql = "UPDATE Products SET CategoryID = ?, ModelNumber = ?, ModelName = ?, Quantity = ?, ProductImage = ?, UnitCost = ?, Description = ? WHERE ProductID = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)){
-            ps.setInt(1, product.getProductID());
-            ps.setInt(2, product.getCategoryID());
-            ps.setString(3, product.getModelNumber());
-            ps.setString(4, product.getModelName());
-            ps.setInt(5, product.getQuantity());
-            ps.setString(6, Objects.nonNull(product.getProductImage()) ? product.getProductImage() : "src/main/webapp/resources/no-image.png");
-            ps.setInt(7, product.getUnitCost());
-            ps.setString(8, product.getComment());
+            ps.setInt(1, product.getCategoryID());
+            ps.setString(2, product.getModelNumber());
+            ps.setString(3, product.getModelName());
+            ps.setInt(4, product.getQuantity());
+            ps.setString(5, Objects.nonNull(product.getProductImage()) ? product.getProductImage() : "no-image.png");
+            ps.setInt(6, product.getUnitCost());
+            ps.setString(7, product.getComment());
+            ps.setInt(8, product.getProductID());
             return ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException(e);

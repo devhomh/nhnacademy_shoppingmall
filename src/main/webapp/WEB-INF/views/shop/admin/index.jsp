@@ -2,6 +2,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" trimDirectiveWhitespaces="true" session="false"%>
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     <c:forEach var="product" items="${products}">
+        <c:url var="view_link" value="/admin/product/view.do">
+            <c:param name="productID" value="${product.productID}"/>
+        </c:url>
+        <c:url var="edit_link" value="/admin/product/edit.do">
+            <c:param name="productID" value="${product.productID}"/>
+        </c:url>
+        <c:url var="delete_link" value="/admin/product/deleteAction.do">
+            <c:param name="productID" value="${product.productID}"/>
+        </c:url>
         <div class="col">
             <div class="card shadow-sm">
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
@@ -14,10 +23,10 @@
                     <p class="card-text">${product.comment}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                            <form method="post" action="">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick=location.href="${view_link}">View</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick=location.href="${edit_link}">Edit</button>
+                            <form method="post" action="${delete_link}">
+                                <button class="btn btn-sm btn-outline-secondary" >Delete</button>
                             </form>
                         </div>
                         <small>남은 수량 : ${product.quantity}</small>

@@ -12,6 +12,6 @@ public class LogoutController implements BaseController {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().removeAttribute("loginID");
-        return "shop/main/index";
+        return "redirect:/index.do";
     }
 }

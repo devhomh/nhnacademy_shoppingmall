@@ -9,4 +9,5 @@ public interface ProductRepository extends Repository<Product>{
     int deleteById(int productId);
     int update(Product product);
     int countById(int productId);
+    Optional<Integer> totalCount();
 }

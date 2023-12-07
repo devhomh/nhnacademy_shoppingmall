@@ -1,6 +1,7 @@
 package com.nhnacademy.shoppingmall.data.repository.impl;
 
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
+import com.nhnacademy.shoppingmall.data.domain.Category;
 import com.nhnacademy.shoppingmall.data.domain.Product;
 import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
 import com.nhnacademy.shoppingmall.data.repository.interfaces.ProductRepository;
@@ -8,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -101,5 +104,22 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public int countById(int productId) {
         return findById(productId).isPresent() ? 1 : 0;
+    }
+
+    public Optional<Integer> totalCount(){
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        sql = "SELECT count(*) AS total FROM Products";
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int result = rs.getInt("total");
+                return Optional.of(result);
+            }
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return Optional.empty();
     }
 }

@@ -39,6 +39,7 @@ public class AdminCheckFilter extends HttpFilter {
 
 
         User user = userService.getUser(id);
+        DbConnectionThreadLocal.reset();
 
         if(user == null){
             res.sendError(HttpServletResponse.SC_UNAUTHORIZED);
@@ -51,6 +52,5 @@ public class AdminCheckFilter extends HttpFilter {
             res.sendError(HttpServletResponse.SC_FORBIDDEN);
         }
 
-        DbConnectionThreadLocal.reset();
     }
 }

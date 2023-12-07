@@ -1,6 +1,7 @@
 package com.nhnacademy.shoppingmall.data.service.impl;
 
 import com.nhnacademy.shoppingmall.data.domain.Category;
+import com.nhnacademy.shoppingmall.data.domain.Product;
 import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
 import com.nhnacademy.shoppingmall.data.repository.interfaces.CategoryRepository;
 import com.nhnacademy.shoppingmall.data.service.interfaces.CategoryService;
@@ -55,14 +56,17 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> toList() {
         List<Category> list = new ArrayList<>();
-        int count = 1;
-        Category category = get(count);
-        while(category != null){
+        int count = categoryRepository.totalCount().orElse(0);
+        int id = 1;
+        for (int i = 0; i < count; i++) {
+            Category category = get(id);
+            while(category == null){
+                id++;
+                category = get(id);
+            }
             list.add(category);
-            count++;
-            category = get(count);
+            id++;
         }
-
         return list;
     }
 }

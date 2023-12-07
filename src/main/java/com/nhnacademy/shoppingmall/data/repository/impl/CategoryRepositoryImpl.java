@@ -81,4 +81,21 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     public int countById(int id) {
         return findById(id).isPresent() ? 1 : 0;
     }
+
+    public Optional<Integer> totalCount(){
+        Connection connection = DbConnectionThreadLocal.getConnection();
+        sql = "SELECT count(*) AS total FROM Categories";
+
+        try(PreparedStatement ps = connection.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int result = rs.getInt("total");
+                return Optional.of(result);
+            }
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return Optional.empty();
+    }
 }

@@ -4,6 +4,8 @@ import com.nhnacademy.shoppingmall.data.domain.Product;
 import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
 import com.nhnacademy.shoppingmall.data.repository.interfaces.ProductRepository;
 import com.nhnacademy.shoppingmall.data.service.interfaces.ProductService;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
@@ -45,5 +47,22 @@ public class ProductServiceImpl implements ProductService {
         } else{
             productRepository.deleteById(id);
         }
+    }
+
+    @Override
+    public List<Product> toList() {
+        List<Product> list = new ArrayList<>();
+        int count = productRepository.totalCount().orElse(0);
+        int id = 1;
+        for (int i = 0; i < count; i++) {
+            Product product = get(id);
+            while(product == null){
+                id++;
+                product = get(id);
+            }
+            list.add(product);
+            id++;
+        }
+        return list;
     }
 }

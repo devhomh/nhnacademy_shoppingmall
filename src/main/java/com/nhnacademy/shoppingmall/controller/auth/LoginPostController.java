@@ -29,6 +29,6 @@ public class LoginPostController implements BaseController {
         session.setAttribute("loginID", loginUser.getUserId());
         session.setMaxInactiveInterval(3600);
 
-        return loginUser.getUserAuth() == User.Auth.ROLE_ADMIN ? "shop/admin/index" : "shop/main/index";
+        return loginUser.getUserAuth() == User.Auth.ROLE_ADMIN ? "redirect:/admin/index.do" : "redirect:/index.do";
     }
 }

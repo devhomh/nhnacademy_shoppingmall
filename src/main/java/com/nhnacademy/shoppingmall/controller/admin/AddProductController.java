@@ -25,6 +25,6 @@ public class AddProductController implements BaseController {
         Product product = new Product(categoryID, modelNumber, modelName, quantity, null, price, comment);
         productService.save(product);
 
-        return "shop/admin/index";
+        return "redirect:/admin/index.do";
     }
 }

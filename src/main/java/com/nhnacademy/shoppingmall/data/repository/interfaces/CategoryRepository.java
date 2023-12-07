@@ -18,4 +18,5 @@ public interface CategoryRepository extends Repository<Category>{
 
     @Override
     int countById(int id);
+    Optional<Integer> totalCount();
 }

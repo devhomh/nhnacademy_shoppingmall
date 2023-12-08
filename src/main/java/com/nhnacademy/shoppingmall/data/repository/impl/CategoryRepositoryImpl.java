@@ -3,14 +3,14 @@ package com.nhnacademy.shoppingmall.data.repository.impl;
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
 import com.nhnacademy.shoppingmall.data.domain.Category;
 import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
-import com.nhnacademy.shoppingmall.data.repository.interfaces.CategoryRepository;
+import com.nhnacademy.shoppingmall.data.repository.interfaces.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class CategoryRepositoryImpl implements CategoryRepository {
+public class CategoryRepositoryImpl implements Repository<Category> {
     private String sql;
 
     @Override

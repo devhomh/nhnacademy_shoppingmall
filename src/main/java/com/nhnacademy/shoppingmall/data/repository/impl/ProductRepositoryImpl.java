@@ -1,20 +1,17 @@
 package com.nhnacademy.shoppingmall.data.repository.impl;
 
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
-import com.nhnacademy.shoppingmall.data.domain.Category;
 import com.nhnacademy.shoppingmall.data.domain.Product;
 import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
-import com.nhnacademy.shoppingmall.data.repository.interfaces.ProductRepository;
+import com.nhnacademy.shoppingmall.data.repository.interfaces.Repository;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ProductRepositoryImpl implements ProductRepository {
+public class ProductRepositoryImpl implements Repository<Product> {
     private String sql;
 
     @Override

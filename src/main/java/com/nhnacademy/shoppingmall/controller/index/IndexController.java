@@ -7,7 +7,7 @@ import com.nhnacademy.shoppingmall.common.page.Page;
 import com.nhnacademy.shoppingmall.data.domain.Product;
 import com.nhnacademy.shoppingmall.data.repository.impl.ProductRepositoryImpl;
 import com.nhnacademy.shoppingmall.data.service.impl.ProductServiceImpl;
-import com.nhnacademy.shoppingmall.data.service.interfaces.ProductService;
+import com.nhnacademy.shoppingmall.data.service.interfaces.Service;
 import java.util.List;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RequestMapping(method = RequestMapping.Method.GET,value = {"/index.do"})
 public class IndexController implements BaseController {
-    private final ProductService productService = new ProductServiceImpl(new ProductRepositoryImpl());
+    private final Service<Product> productService = new ProductServiceImpl(new ProductRepositoryImpl());
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         List<Product> list = productService.toList();

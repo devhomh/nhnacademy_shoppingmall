@@ -2,15 +2,15 @@ package com.nhnacademy.shoppingmall.data.service.impl;
 
 import com.nhnacademy.shoppingmall.data.domain.Product;
 import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
-import com.nhnacademy.shoppingmall.data.repository.interfaces.ProductRepository;
-import com.nhnacademy.shoppingmall.data.service.interfaces.ProductService;
+import com.nhnacademy.shoppingmall.data.repository.interfaces.Repository;
+import com.nhnacademy.shoppingmall.data.service.interfaces.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductServiceImpl implements ProductService {
-    private final ProductRepository productRepository;
+public class ProductServiceImpl implements Service<Product> {
+    private final Repository<Product> productRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {this.productRepository = productRepository;}
+    public ProductServiceImpl(Repository<Product> productRepository) {this.productRepository = productRepository;}
 
     @Override
     public Product get(int productId) {

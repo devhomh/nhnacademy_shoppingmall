@@ -1,17 +1,16 @@
 package com.nhnacademy.shoppingmall.data.service.impl;
 
 import com.nhnacademy.shoppingmall.data.domain.Category;
-import com.nhnacademy.shoppingmall.data.domain.Product;
 import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
-import com.nhnacademy.shoppingmall.data.repository.interfaces.CategoryRepository;
-import com.nhnacademy.shoppingmall.data.service.interfaces.CategoryService;
+import com.nhnacademy.shoppingmall.data.repository.interfaces.Repository;
+import com.nhnacademy.shoppingmall.data.service.interfaces.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryServiceImpl implements CategoryService {
-    private final CategoryRepository categoryRepository;
+public class CategoryServiceImpl implements Service<Category> {
+    private final Repository<Category> categoryRepository;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository){this.categoryRepository = categoryRepository;}
+    public CategoryServiceImpl(Repository<Category> categoryRepository){this.categoryRepository = categoryRepository;}
 
     @Override
     public void save(Category category) {

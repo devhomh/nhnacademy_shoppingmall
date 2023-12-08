@@ -1,6 +1,5 @@
 package com.nhnacademy.shoppingmall.data.repository.interfaces;
 
-import com.nhnacademy.shoppingmall.data.domain.Product;
 import java.util.Optional;
 
 public interface Repository <T>{
@@ -9,4 +8,5 @@ public interface Repository <T>{
     int deleteById(int id);
     int update(T t);
     int countById(int id);
+    Optional<Integer> totalCount();
 }

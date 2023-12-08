@@ -21,6 +21,8 @@
                 <label for="check_password">비밀번호 확인</label>
             </div>
 
+            <p id ="crossCheck"></p>
+
             <div class="form-floating">
                 <input type="text" name="user_name" class="form-control" id="user_name" placeholder="이름" required>
                 <label for="user_name">이름</label>
@@ -31,10 +33,32 @@
                 <label for="user_birth">생일</label>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Sign Up</button>
+            <button class="w-100 btn btn-lg btn-primary mt-3" type="submit" id="btn_signup">Sign Up</button>
 
             <p class="mt-5 mb-3 text-muted">© 2022-2024</p>
 
         </form>
     </div>
 </div>
+
+<script>
+    const password = document.getElementById("user_password");
+    const check = document.getElementById("check_password");
+    const crosscheck = document.getElementById("crossCheck");
+    const submitBtn = document.getElementById("btn_signup");
+
+    const crossCheck = () => {
+        if(password.value !== '' && password.value === check.value){
+            crosscheck.innerText = "비밀 번호가 일치합니다.";
+            crosscheck.style.color = "green";
+            submitBtn.disabled = false;
+        } else {
+            crosscheck.innerText = "비밀 번호가 일치 하지 않습니다.";
+            crosscheck.style.color = "red";
+            submitBtn.disabled = true;
+        }
+    }
+
+    password.addEventListener("keyup", crossCheck);
+    check.addEventListener("keyup", crossCheck);
+</script>

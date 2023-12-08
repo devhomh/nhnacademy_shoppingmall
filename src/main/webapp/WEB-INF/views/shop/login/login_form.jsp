@@ -16,6 +16,8 @@
                 <label for="user_password">비밀번호</label>
             </div>
 
+            <p id="loginCheck" style="color: red"></p>
+
             <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Sign in</button>
 
             <p class="mt-5 mb-3 text-muted">© 2022-2024</p>
@@ -23,3 +25,12 @@
         </form>
     </div>
 </div>
+
+<script>
+    let errorMessage = "${errMsg}";
+
+    if(errorMessage !== ""){
+        alert(errorMessage);
+        window.location.replace("/login.do");
+    }
+</script>

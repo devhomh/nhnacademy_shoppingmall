@@ -22,7 +22,6 @@ public class SignUpPostController implements BaseController {
         String birth = req.getParameter("user_birth");
 
         User user = new User(id, name, password, birth, User.Auth.ROLE_USER, 1_000_000, LocalDateTime.now(), null);
-
         userService.saveUser(user);
 
         return "redirect:/index.do";

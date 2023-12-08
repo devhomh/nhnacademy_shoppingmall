@@ -11,12 +11,18 @@
         <div>상품 이름 : ${item.key.modelName}</div>
         <div>상품 가격 : ${item.key.unitCost}</div>
         <div class="btn-group">
-          <form method="post" action="/updateCartAction.do}">
+          <c:url var="quantity_edit" value="/UpdateCartAction.do">
+            <c:param name="productID" value="${item.key.productID}"/>
+          </c:url>
+          <c:url var="record_delete" value="/DeleteRecordAction.do">
+            <c:param name="productID" value="${item.key.productID}"/>
+          </c:url>
+          <form method="post" action="${quantity_edit}">
             <input type="number" name="quantity" id="quantity" value="${item.value}" style="width: 50px" minlength="0" maxlength="${item.key.quantity}" required>
             <button class="btn btn-sm btn-outline-secondary">수량 변경</button>
           </form>
 
-          <form method="post" action="/deleteRecordAction.do">
+          <form method="post" action="${record_delete}">
             <button class="btn btn-sm btn-outline-secondary" >삭제</button>
           </form>
         </div>

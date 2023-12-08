@@ -65,12 +65,13 @@ public class ShoppingCartRepositoryImpl implements Repository<ShoppingRecord> {
             throw new DomainNullPointerException(shoppingRecord);
         }
         Connection connection = DbConnectionThreadLocal.getConnection();
-        query = "UPDATE ShoppingCart SET CartID = ?, Quantity = ?, ProductID = ?, DateCreateed = ?";
+        query = "UPDATE ShoppingCart SET CartID = ?, Quantity = ?, ProductID = ?, DateCreateed = ? WHERE RecordID = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)){
             ps.setString(1, shoppingRecord.getCartID());
             ps.setInt(2, shoppingRecord.getQuantity());
             ps.setInt(3, shoppingRecord.getProductID());
             ps.setTimestamp(4, Timestamp.valueOf(shoppingRecord.getDateCreated()));
+            ps.setInt(5, shoppingRecord.getRecordID());
             return ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException(e);

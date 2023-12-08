@@ -76,4 +76,13 @@
     </div>
 
 </body>
+
+<script>
+    let errorMessage = "${existErrMsg}";
+
+    if(errorMessage !== ""){
+        alert(errorMessage);
+        window.location.replace("/product/view.do?productID=${existProductID}")
+    }
+</script>
 </html>

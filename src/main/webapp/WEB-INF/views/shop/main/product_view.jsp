@@ -29,7 +29,7 @@
     <div class="btn-group" style="margin-top: 50px">
       <button type="button" class="btn btn-sm btn-outline-secondary" onclick=location.href="${buy_link}">Buy</button>
       <form method="post" action="${cart_link}">
-        <button class="btn btn-sm btn-outline-secondary">Cart</button>
+        <button type="submit" class="btn btn-sm btn-outline-secondary">Cart</button>
       </form>
     </div>
   </div>

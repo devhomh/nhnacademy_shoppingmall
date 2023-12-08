@@ -8,14 +8,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ShoppingCart {
+public class ShoppingRecord {
     private int recordID;
     private String cartID;
     private int quantity;
     private int productID;
     private LocalDateTime dateCreated;
 
-    public ShoppingCart(String cartID, int quantity, int productID, LocalDateTime dateCreated){
+    public ShoppingRecord(String cartID, int quantity, int productID, LocalDateTime dateCreated){
         this.cartID = cartID;
         this.quantity = quantity;
         this.productID = productID;

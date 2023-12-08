@@ -1,7 +1,7 @@
 package com.nhnacademy.shoppingmall.data.repository.impl;
 
 import com.nhnacademy.shoppingmall.common.mvc.transaction.DbConnectionThreadLocal;
-import com.nhnacademy.shoppingmall.data.domain.ShoppingCart;
+import com.nhnacademy.shoppingmall.data.domain.ShoppingRecord;
 import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
 import com.nhnacademy.shoppingmall.data.repository.interfaces.Repository;
 import java.sql.Connection;
@@ -12,21 +12,21 @@ import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ShoppingCartRepositoryImpl implements Repository<ShoppingCart> {
+public class ShoppingCartRepositoryImpl implements Repository<ShoppingRecord> {
     private String query;
 
     @Override
-    public int save(ShoppingCart shoppingCart) {
-        if(shoppingCart == null){
-            throw new DomainNullPointerException(shoppingCart);
+    public int save(ShoppingRecord shoppingRecord) {
+        if(shoppingRecord == null){
+            throw new DomainNullPointerException(shoppingRecord);
         }
         Connection connection = DbConnectionThreadLocal.getConnection();
         query = "INSERT INTO ShoppingCart(CartID, Quantity, ProductID, DateCreateed) VALUES(?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)){
-            ps.setString(1, shoppingCart.getCartID());
-            ps.setInt(2, shoppingCart.getQuantity());
-            ps.setInt(3, shoppingCart.getProductID());
-            ps.setTimestamp(4, Timestamp.valueOf(shoppingCart.getDateCreated()));
+            ps.setString(1, shoppingRecord.getCartID());
+            ps.setInt(2, shoppingRecord.getQuantity());
+            ps.setInt(3, shoppingRecord.getProductID());
+            ps.setTimestamp(4, Timestamp.valueOf(shoppingRecord.getDateCreated()));
             return ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException(e);
@@ -34,7 +34,7 @@ public class ShoppingCartRepositoryImpl implements Repository<ShoppingCart> {
     }
 
     @Override
-    public Optional<ShoppingCart> findById(int id) {
+    public Optional<ShoppingRecord> findById(int id) {
         Connection connection = DbConnectionThreadLocal.getConnection();
         query ="SELECT * FROM ShoppingCart WHERE RecordID=?";
 
@@ -42,14 +42,14 @@ public class ShoppingCartRepositoryImpl implements Repository<ShoppingCart> {
             psmt.setInt(1, id);
             try (ResultSet rs = psmt.executeQuery()){
                 if(rs.next()){
-                    ShoppingCart shoppingCart = new ShoppingCart(
+                    ShoppingRecord shoppingRecord = new ShoppingRecord(
                             rs.getInt("RecordID"),
                             rs.getString("CartID"),
                             rs.getInt("Quantity"),
                             rs.getInt("ProductID"),
                             Objects.nonNull(rs.getTimestamp("DateCreateed")) ? rs.getTimestamp("DateCreateed").toLocalDateTime() : null
                     );
-                    return Optional.of(shoppingCart);
+                    return Optional.of(shoppingRecord);
                 }
             }
         } catch (SQLException e) {
@@ -60,17 +60,17 @@ public class ShoppingCartRepositoryImpl implements Repository<ShoppingCart> {
     }
 
     @Override
-    public int update(ShoppingCart shoppingCart) {
-        if(shoppingCart == null){
-            throw new DomainNullPointerException(shoppingCart);
+    public int update(ShoppingRecord shoppingRecord) {
+        if(shoppingRecord == null){
+            throw new DomainNullPointerException(shoppingRecord);
         }
         Connection connection = DbConnectionThreadLocal.getConnection();
         query = "UPDATE ShoppingCart SET CartID = ?, Quantity = ?, ProductID = ?, DateCreateed = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)){
-            ps.setString(1, shoppingCart.getCartID());
-            ps.setInt(2, shoppingCart.getQuantity());
-            ps.setInt(3, shoppingCart.getProductID());
-            ps.setTimestamp(4, Timestamp.valueOf(shoppingCart.getDateCreated()));
+            ps.setString(1, shoppingRecord.getCartID());
+            ps.setInt(2, shoppingRecord.getQuantity());
+            ps.setInt(3, shoppingRecord.getProductID());
+            ps.setTimestamp(4, Timestamp.valueOf(shoppingRecord.getDateCreated()));
             return ps.executeUpdate();
         } catch(SQLException e){
             throw new RuntimeException(e);

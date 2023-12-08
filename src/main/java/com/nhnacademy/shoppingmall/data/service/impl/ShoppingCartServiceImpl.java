@@ -1,45 +1,45 @@
 package com.nhnacademy.shoppingmall.data.service.impl;
 
-import com.nhnacademy.shoppingmall.data.domain.Product;
-import com.nhnacademy.shoppingmall.data.domain.ShoppingCart;
+import com.nhnacademy.shoppingmall.data.domain.ShoppingRecord;
 import com.nhnacademy.shoppingmall.data.exception.DomainNullPointerException;
 import com.nhnacademy.shoppingmall.data.repository.interfaces.Repository;
-import com.nhnacademy.shoppingmall.data.service.interfaces.Service;
+import com.nhnacademy.shoppingmall.data.service.interfaces.ShoppingCartService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class ShoppingCartServiceImpl implements Service<ShoppingCart> {
-    private final Repository<ShoppingCart> shoppingCartRepository;
+public class ShoppingCartServiceImpl implements ShoppingCartService {
+    private final Repository<ShoppingRecord> shoppingCartRepository;
 
-    public ShoppingCartServiceImpl(Repository<ShoppingCart> shoppingCartRepository) {
+    public ShoppingCartServiceImpl(Repository<ShoppingRecord> shoppingCartRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
     }
 
     @Override
-    public ShoppingCart get(int id) {
+    public ShoppingRecord get(int id) {
         return shoppingCartRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void save(ShoppingCart shoppingCart) {
-        if(shoppingCart == null){
-            throw new DomainNullPointerException(shoppingCart);
+    public void save(ShoppingRecord shoppingRecord) {
+        if(shoppingRecord == null){
+            throw new DomainNullPointerException(shoppingRecord);
         }
-        if(shoppingCartRepository.countById(shoppingCart.getRecordID()) == 1){
+        if(shoppingCartRepository.countById(shoppingRecord.getRecordID()) == 1){
             throw new RuntimeException("존재하는 레코드 입니다.");
         }
-        shoppingCartRepository.save(shoppingCart);
+        shoppingCartRepository.save(shoppingRecord);
     }
 
     @Override
-    public void update(ShoppingCart shoppingCart) {
-        if(shoppingCart == null){
-            throw new DomainNullPointerException(shoppingCart);
+    public void update(ShoppingRecord shoppingRecord) {
+        if(shoppingRecord == null){
+            throw new DomainNullPointerException(shoppingRecord);
         }
-        if(shoppingCartRepository.countById(shoppingCart.getRecordID()) == 0 ){
+        if(shoppingCartRepository.countById(shoppingRecord.getRecordID()) == 0 ){
             throw new RuntimeException("변경할 수 없습니다.");
         } else{
-            shoppingCartRepository.update(shoppingCart);
+            shoppingCartRepository.update(shoppingRecord);
         }
     }
 
@@ -53,19 +53,29 @@ public class ShoppingCartServiceImpl implements Service<ShoppingCart> {
     }
 
     @Override
-    public List<ShoppingCart> toList() {
-        List<ShoppingCart> list = new ArrayList<>();
+    public List<ShoppingRecord> toList() {
+        List<ShoppingRecord> list = new ArrayList<>();
         int count = shoppingCartRepository.totalCount().orElse(0);
         int id = 1;
         for (int i = 0; i < count; i++) {
-            ShoppingCart shoppingCart = get(id);
-            while(shoppingCart == null){
+            ShoppingRecord shoppingRecord = get(id);
+            while(shoppingRecord == null){
                 id++;
-                shoppingCart = get(id);
+                shoppingRecord = get(id);
             }
-            list.add(shoppingCart);
+            list.add(shoppingRecord);
             id++;
         }
         return list;
+    }
+
+    public List<ShoppingRecord> filterById(String cartID){
+        if(cartID == null){
+            throw new NullPointerException("cartID가 null 입니다.");
+        }
+
+        return toList().stream()
+                .filter(element -> element.getCartID().equals(cartID))
+                .collect(Collectors.toList());
     }
 }

@@ -5,7 +5,7 @@
   <c:url var="buy_link" value="/product/buy.do">
     <c:param name="productID" value="${product.productID}"/>
   </c:url>
-  <c:url var="cart_link" value="/admin/product/cart.do">
+  <c:url var="cart_link" value="/AddCartAction.do">
     <c:param name="productID" value="${product.productID}"/>
   </c:url>
   <c:choose>
@@ -28,7 +28,9 @@
     </svg>
     <div class="btn-group" style="margin-top: 50px">
       <button type="button" class="btn btn-sm btn-outline-secondary" onclick=location.href="${buy_link}">Buy</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary" onclick=location.href="${cart_link}">Cart</button>
+      <form method="post" action="${cart_link}">
+        <button class="btn btn-sm btn-outline-secondary">Cart</button>
+      </form>
     </div>
   </div>
 </div>

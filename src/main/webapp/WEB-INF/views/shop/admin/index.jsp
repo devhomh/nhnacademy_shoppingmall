@@ -11,15 +11,24 @@
         <c:url var="delete_link" value="/admin/product/deleteAction.do">
             <c:param name="productID" value="${product.productID}"/>
         </c:url>
+        <c:choose>
+            <c:when test="${product.productImage eq 'no-image'}">
+                <c:set var="img_link" value="${pageContext.request.contextPath}/resources/no-image.png"/>
+            </c:when>
+            <c:otherwise>
+                <c:set var="img_link" value="${product.productImage}"/>
+            </c:otherwise>
+        </c:choose>
         <div class="col">
             <div class="card shadow-sm">
                 <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
                     <title>Placeholder</title>
                     <rect width="100%" height="100%" fill="#55595c"></rect>
-                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">${product.modelName}</text>
+                    <image xlink:href="${img_link}" width="100%" height="225"></image>
                 </svg>
 
                 <div class="card-body">
+                    <p class="card-text">${product.modelName}</p>
                     <p class="card-text">${product.comment}</p>
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">

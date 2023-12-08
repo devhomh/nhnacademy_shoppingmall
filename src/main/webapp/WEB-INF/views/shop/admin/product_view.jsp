@@ -8,6 +8,14 @@
     <c:url var="delete_link" value="/admin/product/deleteAction.do">
         <c:param name="productID" value="${product.productID}"/>
     </c:url>
+    <c:choose>
+        <c:when test="${product.productImage eq 'no-image'}">
+            <c:set var="img_link" value="${pageContext.request.contextPath}/resources/no-image.png"/>
+        </c:when>
+        <c:otherwise>
+            <c:set var="img_link" value="${product.productImage}"/>
+        </c:otherwise>
+    </c:choose>
     <div>
         <h1>${product.modelName}</h1>
         <div>${product.comment}</div>
@@ -16,6 +24,7 @@
         <svg class="bd-placeholder-img" width="100%" height="400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
             <title>Placeholder</title>
             <rect width="100%" height="100%" fill="#55595c"></rect>
+            <image xlink:href="${img_link}" width="100%" height="400"></image>
         </svg>
         <div class="btn-group" style="margin-top: 50px">
             <button type="button" class="btn btn-sm btn-outline-secondary" onclick=location.href="${edit_link}">Edit</button>

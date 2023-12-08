@@ -1,4 +1,4 @@
-package com.nhnacademy.shoppingmall.controller.auth;
+package com.nhnacademy.shoppingmall.controller.index;
 
 import com.nhnacademy.shoppingmall.common.mvc.annotation.RequestMapping;
 import com.nhnacademy.shoppingmall.common.mvc.controller.BaseController;
@@ -9,15 +9,15 @@ import com.nhnacademy.shoppingmall.data.service.interfaces.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@RequestMapping(method = RequestMapping.Method.GET, value = "/signup.do")
-public class SignUpController implements BaseController {
+@RequestMapping(method = RequestMapping.Method.GET, value = "/mypage/index.do")
+public class MyPageController implements BaseController {
     UserService userService = new UserServiceImpl(new UserRepositoryImpl());
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
-        String id = req.getParameter("userID");
+        String id = req.getParameter("loginID");
         User loginUser = userService.getUser(id);
         req.setAttribute("user", loginUser);
 
-        return "shop/login/signup_form";
+        return "shop/main/mypage";
     }
 }

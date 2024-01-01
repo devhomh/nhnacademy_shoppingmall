@@ -4,7 +4,7 @@
 
 [source,java]
 ----
-include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/user/service/UserService.java[]
+include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/data/service/interfaces/UserService.java[]
 ----
 
 == UserServiceImpl
@@ -13,7 +13,7 @@ include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/user/service/U
 
 [source,java]
 ----
-include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/user/service/impl/UserServiceImpl.java[]
+include::{docdir}/../../src/main/java/com/nhnacademy/shoppingmall/data/service/impl/UserServiceImpl.java[]
 ----
 
 == Test Code

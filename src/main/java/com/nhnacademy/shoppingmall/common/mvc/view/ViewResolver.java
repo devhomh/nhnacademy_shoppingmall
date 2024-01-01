@@ -19,29 +19,44 @@ public class ViewResolver {
         this.postfix = postfix;
     }
 
+    private void viewNameNullPointerException(String viewName){
+        if(viewName == null){
+            throw new NullPointerException("Parameter value is null");
+        }
+    }
+
     public  String getPath(String viewName){
         //todo#6-1  postfix+viewNAme+postfix 반환 합니다.
-        return "";
+        viewNameNullPointerException(viewName);
+        if(viewName.startsWith("/")){
+            return this.prefix + viewName.substring(1) + this.postfix;
+        }
+        return this.prefix + viewName + postfix;
     }
 
     public boolean isRedirect(String viewName){
         //todo#6-2 REDIRECT_PREFIX가 포함되어 있는지 체크 합니다.
-        return false;
+        viewNameNullPointerException(viewName);
+        return viewName.toLowerCase().startsWith(REDIRECT_PREFIX);
     }
 
     public String getRedirectUrl(String viewName){
         //todo#6-3 REDIRECT_PREFIX를 제외한 url을 반환 합니다.
-
-        return "";
+        viewNameNullPointerException(viewName);
+        if(isRedirect(viewName)){
+            return viewName.substring(REDIRECT_PREFIX.length());
+        } else{
+            throw new IllegalArgumentException("Redirect-URL이 아닙니다.");
+        }
     }
 
     public String getLayOut(String viewName){
 
-        /*todo#6-4 viewName에
+        /*
            /admin/경로가 포함되었다면 DEFAULT_ADMIN_LAYOUT 반환 합니다.
            /admin/경로가 포함되어 있지않다면 DEFAULT_SHOP_LAYOUT 반환 합니다.
         */
-
-        return DEFAULT_SHOP_LAYOUT;
+        viewNameNullPointerException(viewName);
+        return viewName.contains("/admin/") ? DEFAULT_ADMIN_LAYOUT : DEFAULT_SHOP_LAYOUT;
     }
 }
